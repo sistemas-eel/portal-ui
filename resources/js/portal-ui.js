@@ -96,9 +96,16 @@ import '../css/portal-ui.css';
     }
 
     function initializeAutoDismiss(el) {
-        if (el.__portalAutoDismissInitialized) return;
-        el.__portalAutoDismissInitialized = true;
         var delay = parseInt(el.getAttribute('data-portal-auto-dismiss'), 10) || 5000;
+        var signature = delay + ':' + (el.textContent || '').trim();
+
+        if (el.__portalAutoDismissSignature === signature) return;
+
+        if (el.__portalAutoDismissTimer) {
+            clearTimeout(el.__portalAutoDismissTimer);
+        }
+
+        el.__portalAutoDismissSignature = signature;
         var progressBar = el.querySelector('.portal-alert-progress');
 
         if (progressBar) {
@@ -113,10 +120,11 @@ import '../css/portal-ui.css';
             });
         }
 
-        setTimeout(function () {
+        el.__portalAutoDismissTimer = setTimeout(function () {
             if (document.body.contains(el)) {
                 dismissElement(el);
             }
+            el.__portalAutoDismissTimer = null;
         }, delay);
     }
 
@@ -142,6 +150,20 @@ import '../css/portal-ui.css';
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
+    function registerLivewireAutoDismissHooks() {
+        if (!window.Livewire || window.__portalLivewireAutoDismissHooksRegistered) return;
+
+        window.__portalLivewireAutoDismissHooksRegistered = true;
+
+        ['morph.added', 'morphed', 'message.processed'].forEach(function (hook) {
+            if (typeof window.Livewire.hook !== 'function') return;
+
+            window.Livewire.hook(hook, function (payload) {
+                initializeAutoDismissInRoot(payload && payload.el ? payload.el : document);
+            });
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         var prefersDark = localStorage.getItem('portal-ui-dark') === 'true' ||
             (!('portal-ui-dark' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -152,7 +174,10 @@ import '../css/portal-ui.css';
 
         initializeAutoDismissInRoot();
         observeAutoDismiss();
+        registerLivewireAutoDismissHooks();
     });
+
+    document.addEventListener('livewire:init', registerLivewireAutoDismissHooks);
 
     document.addEventListener('click', function (event) {
         var modalOpenButton = closest(event.target, '[data-portal-modal-open]');

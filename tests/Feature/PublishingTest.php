@@ -71,9 +71,12 @@ class PublishingTest extends TestCase
         $this->assertFileExists($this->publishedAssets.'/portal-ui.js');
         $this->assertStringContainsString('--color-portal', $css);
         $this->assertStringContainsString('data-portal-sidebar', $js);
+        $this->assertStringContainsString('portalAutoDismissSignature', $js);
+        $this->assertStringContainsString('livewire:init', $js);
+        $this->assertStringContainsString('morphed', $js);
         $this->assertStringNotContainsString('chat', strtolower($css.$js));
         $this->assertStringNotContainsString('agente', strtolower($css.$js));
-        $this->assertStringNotContainsString('wire:', strtolower($css.$js));
+        $this->assertStringNotContainsString('wire:model', strtolower($css.$js));
     }
 
     public function test_stubs_podem_ser_publicados_com_modelos_de_navegacao_e_rotas_demo(): void
