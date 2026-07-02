@@ -3,7 +3,7 @@
 @section('title', 'CRUD Administrativo')
 
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
+    <a href="{{ Route::has('dashboard') ? route('dashboard') : (Route::has('home') ? route('home') : '#') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
     <span>/</span>
     <span>Cadastros</span>
     <span>/</span>
@@ -24,7 +24,7 @@
         title="CRUD Administrativo"
         subtitle="Exemplo de listagem, filtros, estados e ações para telas administrativas do portal."
         :breadcrumbs="[
-            ['label' => 'Dashboard', 'route' => 'dashboard'],
+            ['label' => 'Dashboard', 'route' => Route::has('dashboard') ? 'dashboard' : (Route::has('home') ? 'home' : '')],
             ['label' => 'Cadastros', 'route' => ''],
             ['label' => 'CRUD Administrativo', 'route' => ''],
         ]"

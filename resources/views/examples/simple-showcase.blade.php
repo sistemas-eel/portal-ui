@@ -3,7 +3,7 @@
 @section('title', 'Showcase Simple')
 
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
+    <a href="{{ Route::has('dashboard') ? route('dashboard') : (Route::has('home') ? route('home') : '#') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
     <span>/</span>
     <span>Showcase Simple</span>
 @endsection
@@ -22,7 +22,7 @@
         title="Showcase Simple"
         subtitle="Exemplo interno intermediário com cabeçalhos, cards, tabela e formulário."
         :breadcrumbs="[
-            ['label' => 'Dashboard', 'route' => 'dashboard'],
+            ['label' => 'Dashboard', 'route' => Route::has('dashboard') ? 'dashboard' : (Route::has('home') ? 'home' : '')],
             ['label' => 'Showcase Simple', 'route' => ''],
         ]"
     >

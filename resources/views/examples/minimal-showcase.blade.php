@@ -3,7 +3,7 @@
 @section('title', 'Showcase Minimal')
 
 @section('breadcrumbs')
-    <a href="{{ route('dashboard') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
+    <a href="{{ Route::has('dashboard') ? route('dashboard') : (Route::has('home') ? route('home') : '#') }}" class="hover:text-gray-700 hover:underline">Dashboard</a>
     <span>/</span>
     <span>Showcase Minimal</span>
 @endsection
@@ -23,7 +23,7 @@
             title="Showcase Minimal"
             subtitle="Exemplo mais enxuto para páginas internas com cabeçalho, um card principal e uma ação."
             :breadcrumbs="[
-                ['label' => 'Dashboard', 'route' => 'dashboard'],
+                ['label' => 'Dashboard', 'route' => Route::has('dashboard') ? 'dashboard' : (Route::has('home') ? 'home' : '')],
                 ['label' => 'Showcase Minimal', 'route' => ''],
             ]"
         >
