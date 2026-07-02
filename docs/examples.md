@@ -42,10 +42,28 @@ O tema monta a sidebar a partir de `config('portal-ui.navigation.groups')`. A to
 
 Os stubs publicados pelo pacote ajudam a começar mais rápido:
 
-- `stubs/portal-ui/navigation/minimal.php`: base mínima, com uma única entrada interna
-- `stubs/portal-ui/navigation/simple.php`: evolução natural do minimal, com poucas áreas principais
-- `stubs/portal-ui/navigation/admin.php`: evolução do simple, com seção administrativa e itens protegidos por `can`
-- `stubs/portal-ui/routes/demo.php`: rotas prontas para expor os showcases
+- `stubs/portal-ui/navigation/minimal.php`: base mínima, com uma única entrada interna.
+- `stubs/portal-ui/navigation/simple.php`: evolução natural do minimal, com poucas áreas principais.
+- `stubs/portal-ui/navigation/admin.php`: evolução do simple, com seção administrativa e itens protegidos por `can`.
+- `stubs/portal-ui/routes/demo.php`: rotas prontas para expor os showcases.
+
+#### Como carregar as rotas de demonstração dos stubs
+No seu arquivo `routes/web.php` (no app consumidor), carregue as rotas do stub dinamicamente:
+```php
+if (file_exists(base_path('stubs/portal-ui/routes/demo.php'))) {
+    require base_path('stubs/portal-ui/routes/demo.php');
+}
+```
+
+#### Como configurar a navegação usando os stubs
+Abra um dos stubs de navegação listados acima, copie a estrutura de grupos retornada e cole-a diretamente na chave `groups` do arquivo publicado `config/portal-ui.php`:
+```php
+'navigation' => [
+    'groups' => [
+        // Cole a estrutura do stub de navegação copiado aqui
+    ],
+],
+```
 
 Os exemplos visuais seguem a mesma progressão:
 

@@ -447,7 +447,24 @@ Views de exemplo incluídas:
 - `portal-ui::examples.admin-crud-showcase`
 - `portal-ui::examples.guest-showcase`
 
-Rotas sugeridas:
+### Como usar os stubs de exemplos e rotas no app consumidor
+
+Após publicar os stubs com `php artisan vendor:publish --tag=portal-ui-stubs`, você pode carregar as rotas de demonstração diretamente no arquivo `routes/web.php` do seu projeto:
+
+```php
+if (file_exists(base_path('stubs/portal-ui/routes/demo.php'))) {
+    require base_path('stubs/portal-ui/routes/demo.php');
+}
+```
+
+Isso registrará as rotas automaticamente (como `/portal-ui-demo`). 
+
+Para configurar a barra lateral (sidebar) com um dos modelos de menu incluídos em `stubs/portal-ui/navigation/`:
+1. Escolha um dos arquivos (ex: `simple.php` ou `admin.php`).
+2. Copie a estrutura de grupos contida no `return` dele.
+3. Cole no array `'groups'` dentro do arquivo `config/portal-ui.php` publicado no seu projeto.
+
+Como alternativa manual, você pode registrar as rotas sugeridas diretamente:
 
 ```php
 use Illuminate\Support\Facades\Route;
