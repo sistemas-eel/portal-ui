@@ -40,16 +40,27 @@
         aria-modal="true"
         @if($title) aria-label="{{ $title }}" @endif
         @if($isWireModal)
+            wire:ignore.self
             x-data="{ show: $wire.entangle('{{ $wireModel }}') }"
             x-show="show"
             x-cloak
-            x-effect="
-                if (show) {
+            x-init="
+                $watch('show', value => {
+                    if (! value) return
+
                     requestAnimationFrame(() => {
                         $el.querySelector('[data-autofocus]')?.focus()
                     })
-                }
+                })
             "
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            style="display: none;"
+            x-on:keydown.escape.window="show = false"
         @endif
     >
         <div
@@ -73,15 +84,6 @@
         >
             <div
                 class="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl {{ $maxWidthClass }} w-full mt-20 sm:my-10 relative overflow-hidden"
-                @if($isWireModal)
-                    x-show="show"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 translate-y-full sm:translate-y-10 sm:scale-95"
-                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                    x-transition:leave-end="opacity-0 translate-y-full sm:translate-y-10 sm:scale-95"
-                @endif
             >
                 <div class="{{ $headerClass }} px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
                     <h2 class="text-lg font-semibold flex items-center gap-2">

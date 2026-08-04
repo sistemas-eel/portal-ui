@@ -51,6 +51,9 @@ class ComponentsRenderingTest extends TestCase
         $this->assertStringContainsString('wire:target="save"', $html);
         $this->assertStringContainsString('Salvar Livewire', $html);
         $this->assertStringContainsString('x-data="{ show: $wire.entangle(\'showDetails\') }"', $html);
+        $this->assertStringContainsString('wire:ignore.self', $html);
+        $this->assertStringContainsString('$watch(\'show\'', $html);
+        $this->assertStringNotContainsString('x-effect=', $html);
         $this->assertStringNotContainsString('@entangle', $html);
     }
 
