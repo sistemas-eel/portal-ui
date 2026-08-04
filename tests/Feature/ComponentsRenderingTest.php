@@ -54,6 +54,7 @@ class ComponentsRenderingTest extends TestCase
         $this->assertStringContainsString('wire:ignore.self', $html);
         $this->assertStringContainsString('$watch(\'show\'', $html);
         $this->assertStringNotContainsString('x-effect=', $html);
+        $this->assertStringNotContainsString('x-transition:', $html);
         $this->assertStringNotContainsString('@entangle', $html);
     }
 
