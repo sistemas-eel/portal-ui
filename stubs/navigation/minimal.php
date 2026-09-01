@@ -8,9 +8,9 @@ return [
             'items' => [
                 [
                     'label' => 'Início',
-                    'route' => 'dashboard',
+                    'route' => 'home',
                     'icon' => 'fa-home',
-                    'active' => 'dashboard',
+                    'active' => 'home',
                 ],
             ],
         ],

@@ -232,11 +232,6 @@ class LayoutRenderingTest extends TestCase
                 return '';
             }
 
-            public function getAuthIdentifierValue(): mixed
-            {
-                return 1;
-            }
-
             public function getNameAttribute(): string
             {
                 return 'Maria de Teste';

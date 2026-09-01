@@ -99,6 +99,9 @@ class ComponentsRenderingTest extends TestCase
 
         $this->assertStringContainsString('fa-tachometer-alt', $html);
         $this->assertStringContainsString('fa-book', $html);
+        $this->assertMatchesRegularExpression('/class="[^"]*fa-solid[^"]*fa-house[^"]*icone-local/', $html);
+        $this->assertStringContainsString('fa-brands fa-github', $html);
+        $this->assertStringContainsString('role="img" aria-label="GitHub"', $html);
         $this->assertStringContainsString('data-portal-tooltip', $html);
         $this->assertStringNotContainsString('wire:', $html);
     }
@@ -136,6 +139,8 @@ class ComponentsRenderingTest extends TestCase
         $this->assertStringContainsString('data-portal-modal', $html);
         $this->assertStringContainsString('role="dialog"', $html);
         $this->assertStringContainsString('aria-modal="true"', $html);
+        $this->assertMatchesRegularExpression('/id="detalhes-modal"[\s\S]*?aria-hidden="false"/', $html);
+        $this->assertMatchesRegularExpression('/id="modal-oculto"[\s\S]*?aria-hidden="true"/', $html);
         $this->assertStringContainsString('Detalhes do item', $html);
         $this->assertStringContainsString('Conteúdo do modal sem Livewire.', $html);
         $this->assertStringContainsString('data-portal-modal-close', $html);

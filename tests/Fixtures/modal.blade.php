@@ -7,3 +7,7 @@
 </x-portal::modal>
 
 <button type="button" data-portal-modal-open="detalhes-modal">Abrir modal</button>
+
+<x-portal::modal title="Modal oculto" id="modal-oculto" class="is-hidden">
+    Conteúdo inicialmente oculto.
+</x-portal::modal>

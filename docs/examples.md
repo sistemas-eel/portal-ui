@@ -479,7 +479,7 @@ public function edit(int $id): void
 >
     Conteúdo do formulário.
 
-    <x-slot:footer>
+    <x-slot name="footer">
         <x-portal::button
             variant="secondary"
             click="$set('showCreateModal', false)"
@@ -490,7 +490,7 @@ public function edit(int $id): void
         <x-portal::button click="save" icon="fa-save">
             Salvar
         </x-portal::button>
-    </x-slot:footer>
+    </x-slot>
 </x-portal::modal>
 ```
 
@@ -515,14 +515,14 @@ Exemplo com Livewire:
 />
 
 <x-portal::table>
-    <x-slot:head>
+    <x-slot name="head">
         <tr>
             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Nome</th>
             <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Ações</th>
         </tr>
-    </x-slot:head>
+    </x-slot>
 
-    <x-slot:body>
+    <x-slot name="body">
         @forelse ($registros as $registro)
             <tr>
                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registro->nome }}</td>
@@ -549,7 +549,7 @@ Exemplo com Livewire:
                 </td>
             </tr>
         @endforelse
-    </x-slot:body>
+    </x-slot>
 </x-portal::table>
 
 <x-portal::section-footer align="center" bordered="false">
@@ -563,14 +563,14 @@ Exemplo sem Livewire:
 
 ```blade
 <x-portal::table>
-    <x-slot:head>
+    <x-slot name="head">
         <tr>
             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Nome</th>
             <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Ações</th>
         </tr>
-    </x-slot:head>
+    </x-slot>
 
-    <x-slot:body>
+    <x-slot name="body">
         @foreach ($registros as $registro)
             <tr>
                 <td class="px-4 py-3 text-sm text-gray-700">{{ $registro->nome }}</td>
@@ -584,7 +584,7 @@ Exemplo sem Livewire:
                 </td>
             </tr>
         @endforeach
-    </x-slot:body>
+    </x-slot>
 </x-portal::table>
 ```
 
@@ -616,9 +616,9 @@ Notas práticas:
     />
 
     <x-portal::card>
-        <x-slot:header>
+        <x-slot name="header">
             Indicadores
-        </x-slot:header>
+        </x-slot>
 
         Conteúdo principal da página.
     </x-portal::card>
@@ -654,9 +654,9 @@ Use para cabeçalho principal da página, com breadcrumbs e ações:
         ['label' => 'Usuários', 'route' => ''],
     ]"
 >
-    <x-slot:actions>
+    <x-slot name="actions">
         <x-portal::button icon="fa-plus">Novo usuário</x-portal::button>
-    </x-slot:actions>
+    </x-slot>
 </x-portal::page-header>
 ```
 
@@ -676,15 +676,15 @@ Use dentro de cards e blocos internos:
 
 ```blade
 <x-portal::card>
-    <x-slot:header>
+    <x-slot name="header">
         Resumo
-    </x-slot:header>
+    </x-slot>
 
     Conteúdo do card.
 
-    <x-slot:footer>
+    <x-slot name="footer">
         Rodapé opcional.
-    </x-slot:footer>
+    </x-slot>
 </x-portal::card>
 ```
 

@@ -1,4 +1,4 @@
-@push('portal-theme-head')
+@push('portal-ui-head')
     <style>
         .senhaunica-badge-destroy {
             color: #fef3c7 !important;

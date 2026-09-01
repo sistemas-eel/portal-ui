@@ -10,14 +10,14 @@
 />
 
 <x-portal::table class="lista-crud">
-    <x-slot:head>
+    <x-slot name="head">
         <tr>
             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Nome</th>
             <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">Ações</th>
         </tr>
-    </x-slot:head>
+    </x-slot>
 
-    <x-slot:body>
+    <x-slot name="body">
         <tr>
             <td class="px-4 py-3 text-sm text-gray-700">Registro Livewire</td>
             <td class="px-4 py-3 text-right">
@@ -52,7 +52,7 @@
                 />
             </td>
         </tr>
-    </x-slot:body>
+    </x-slot>
 </x-portal::table>
 
 <x-portal::section-footer align="center" bordered="false" muted="true">

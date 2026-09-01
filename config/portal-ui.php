@@ -57,7 +57,7 @@ return [
         'load_js' => true,
         'css_path' => 'vendor/portal-ui/portal-ui.css',
         'js_path' => 'vendor/portal-ui/portal-ui.js',
-        'fontawesome_cdn' => true,
+        'fontawesome_cdn' => env('PORTAL_UI_FONTAWESOME_CDN', false),
         'fontawesome_cdn_url' => 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css',
     ],
 
@@ -88,14 +88,19 @@ return [
     |--------------------------------------------------------------------------
     |
     | Integrações opcionais com pacotes comuns nos sistemas consumidores. Quando
-    | habilitada, a integração SenhaUnica registra views tematizadas no namespace
-    | "senhaunica", mantendo prioridade para overrides locais do consumidor.
+    | A integração SenhaUnica é habilitada automaticamente quando o service
+    | provider da dependência está disponível. Overrides locais mantêm prioridade.
     |
     */
 
     'integrations' => [
         'senhaunica' => [
-            'enabled' => env('PORTAL_UI_SENHAUNICA_VIEWS', true),
+            'provider' => \Uspdev\SenhaunicaSocialite\SenhaunicaServiceProvider::class,
+            'enabled' => env(
+                'PORTAL_UI_SENHAUNICA_VIEWS',
+                class_exists(\Uspdev\SenhaunicaSocialite\SenhaunicaServiceProvider::class)
+            ),
+            'layout' => env('PORTAL_UI_SENHAUNICA_LAYOUT', 'portal-ui::layouts.app'),
         ],
     ],
 

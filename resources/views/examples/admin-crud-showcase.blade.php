@@ -29,11 +29,11 @@
             ['label' => 'CRUD Administrativo', 'route' => ''],
         ]"
     >
-        <x-slot:actions>
+        <x-slot name="actions">
             <x-portal::badge variant="warning">Admin</x-portal::badge>
             <x-portal::button variant="outline" icon="fa-download">Exportar</x-portal::button>
             <x-portal::button icon="fa-plus">Novo registro</x-portal::button>
-        </x-slot:actions>
+        </x-slot>
     </x-portal::page-header>
 
     <div class="space-y-6">
@@ -90,9 +90,9 @@
 
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <span class="font-semibold text-gray-900 dark:text-gray-100">Resumo rápido</span>
-                </x-slot:header>
+                </x-slot>
 
                 <div class="space-y-3 text-sm">
                     <div class="flex items-center justify-between">
@@ -116,9 +116,9 @@
                     subtitle="Bloco útil para controles globais acima da tabela."
                     icon="fa-bolt"
                 >
-                    <x-slot:actions>
+                    <x-slot name="actions">
                         <x-portal::button size="sm" variant="ghost" icon="fa-rotate-right">Sincronizar</x-portal::button>
-                    </x-slot:actions>
+                    </x-slot>
                 </x-portal::section-header>
 
                 <div class="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
@@ -145,7 +145,7 @@
             />
 
             <x-portal::table>
-                <x-slot:head>
+                <x-slot name="head">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Registro</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Categoria</th>
@@ -153,9 +153,9 @@
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Publicado</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Ações</th>
                     </tr>
-                </x-slot:head>
+                </x-slot>
 
-                <x-slot:body>
+                <x-slot name="body">
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40">
                             <td class="px-4 py-3">
                                 <div class="flex items-start gap-3">
@@ -212,7 +212,7 @@
                                 />
                             </td>
                         </tr>
-                </x-slot:body>
+                </x-slot>
             </x-portal::table>
 
             <x-portal::section-footer muted="true">
@@ -228,9 +228,9 @@
 
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <span class="font-semibold text-gray-900 dark:text-gray-100">Estado vazio</span>
-                </x-slot:header>
+                </x-slot>
 
                 <x-portal::empty-state
                     title="Nenhum item encontrado"
@@ -240,9 +240,9 @@
             </x-portal::card>
 
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <span class="font-semibold text-gray-900 dark:text-gray-100">Alertas de contexto</span>
-                </x-slot:header>
+                </x-slot>
 
                 <div class="space-y-3">
                     <x-portal::alert variant="warning" title="Sincronização pendente">
@@ -261,7 +261,7 @@
                 subtitle="Demonstra o uso combinado de resource-actions, table-actions e confirm-modal."
                 icon="fa-bolt"
             >
-                <x-slot:actions>
+                <x-slot name="actions">
                     <x-portal::button
                         type="button"
                         size="sm"
@@ -271,7 +271,7 @@
                     >
                         Abrir confirmação
                     </x-portal::button>
-                </x-slot:actions>
+                </x-slot>
             </x-portal::section-header>
 
             <div class="grid grid-cols-1 gap-4 p-6 lg:grid-cols-2">

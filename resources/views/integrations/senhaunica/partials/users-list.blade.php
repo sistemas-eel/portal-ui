@@ -1,4 +1,4 @@
-@push('portal-theme-head')
+@push('portal-ui-head')
     <style>
         .col-permission { text-align: right; width: 130px; }
         .col-button { width: 30px; text-align: center; }
@@ -52,7 +52,8 @@
                                 {{ $user->{$column['key']} }}
                                 <button type="button"
                                     title="Alteração - Usuário Local"
-                                    class="text-portal hover:text-portal-dark p-0 getLocalUser"
+                                    class="text-portal hover:text-portal-dark p-0"
+                                    data-portal-local-user-edit
                                     data-url="{{ route(config('senhaunica.localUserRoutes') . '.edit', $user->id) }}"
                                     data-action="{{ route(config('senhaunica.localUserRoutes') . '.update', $user->id) }}">
                                     <i class="fa fa-user-plus" aria-hidden="true"></i>
@@ -94,27 +95,5 @@
 <div class="mt-3">
     {{ $users->appends($params)->links() }}
 </div>
-
-@push('portal-theme-after-scripts')
-    <script>
-        $(document).ready(function() {
-            $(document).on('click', '.getLocalUser', function(e) {
-                e.preventDefault();
-                var url = $(this).data('url');
-                var action = $(this).data('action');
-                $.ajax({
-                    url: url,
-                    method: "GET",
-                    dataType: 'JSON',
-                    success: function(item) {
-                        if (typeof window.openLocalUserEdit === 'function') {
-                            window.openLocalUserEdit({ name: item.name, email: item.email, action: action });
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
 
 @yield('bottom_senhaunica_users')

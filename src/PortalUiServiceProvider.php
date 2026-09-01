@@ -4,11 +4,16 @@ namespace SistemasEel\PortalUi;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Component;
+use SistemasEel\PortalUi\Console\PortalUiDoctorCommand;
+use SistemasEel\PortalUi\Console\PortalUiInstallCommand;
+use SistemasEel\PortalUi\Support\SenhaunicaIntegration;
 use SistemasEel\PortalUi\View\Components\AppLayout;
 use SistemasEel\PortalUi\View\Components\GuestLayout;
 
 class PortalUiServiceProvider extends ServiceProvider
 {
+    public const VERSION = '0.2.0';
+
     /**
      * Componentes anônimos expostos pelo pacote.
      *
@@ -26,6 +31,7 @@ class PortalUiServiceProvider extends ServiceProvider
         'section-footer',
         'page-header',
         'hero-header',
+        'icon',
         'button',
         'table-actions',
         'resource-actions',
@@ -51,6 +57,13 @@ class PortalUiServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/portal-ui.php', 'portal-ui');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                PortalUiDoctorCommand::class,
+                PortalUiInstallCommand::class,
+            ]);
+        }
     }
 
     public function boot(): void
@@ -96,7 +109,7 @@ class PortalUiServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/portal-ui'),
-        ], 'portal-ui-assets');
+        ], ['portal-ui-assets', 'laravel-assets']);
 
         $this->publishes([
             __DIR__.'/../stubs' => base_path('stubs/portal-ui'),
@@ -105,7 +118,7 @@ class PortalUiServiceProvider extends ServiceProvider
 
     protected function registerSenhaunicaViews(): void
     {
-        if (! config('portal-ui.integrations.senhaunica.enabled', true)) {
+        if (! SenhaunicaIntegration::isEnabled()) {
             return;
         }
 

@@ -2,17 +2,40 @@
 
 Biblioteca de UI Laravel reutilizável para sistemas administrativos. O pacote é `Blade-first`: entrega layouts, componentes, configuração e assets compilados sem exigir Livewire, Alpine, Tailwind ou Vite no app consumidor.
 
-Versão inicial: `v0.1.0`.
+Versão atual: `v0.2.0`.
+
+## Comece aqui
+
+Se esta é sua primeira instalação, siga o tutorial [Primeira tela com Portal UI](docs/getting-started.md). Ele começa em um projeto Laravel novo e termina com uma página acessível no navegador, contendo layout, topbar, menu, card, ícones e modo escuro.
+
+O caminho automático recomendado é:
+
+```bash
+composer require sistemas-eel/portal-ui:^0.2
+php artisan portal-ui:install --starter
+php artisan serve
+```
+
+Depois, abra `/portal-ui-starter`. O instalador preserva arquivos existentes por padrão.
+
+Guias complementares:
+
+- [Autenticação](docs/authentication.md): como transformar a primeira tela em uma área protegida.
+- [Integração SenhaÚnica](docs/senhaunica.md): layout, rotas administrativas, LoginAs e gate `admin`.
+- [Solução de problemas](docs/troubleshooting.md): diagnóstico por sintoma.
+- [Exemplos de componentes](docs/examples.md): navegação e telas mais completas.
 
 ## Requisitos
 
 ```json
 {
-  "php": "^7.4|^8.0|^8.1|^8.2|^8.3|^8.4",
-  "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-  "illuminate/view": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
+  "php": "^7.4 || ^8.0",
+  "illuminate/support": "^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
+  "illuminate/view": "^8.0 || ^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0"
 }
 ```
+
+Essas combinações são verificadas continuamente no GitHub Actions com uma matriz que cobre PHP 7.4 a 8.4 e Laravel 8 a 13, usando a geração correspondente do Orchestra Testbench.
 
 ## Instalação
 
@@ -22,15 +45,29 @@ Instale o pacote no app consumidor com Composer:
 composer require sistemas-eel/portal-ui
 ```
 
-Depois execute:
+O Laravel executa o package discovery automaticamente durante a instalação. Se a descoberta automática estiver desabilitada no projeto, execute manualmente:
 
 ```bash
 php artisan package:discover
 ```
 
-Se quiser fixar uma faixa de versão, use algo como `sistemas-eel/portal-ui:^0.1`.
+Se quiser fixar uma faixa de versão, use `sistemas-eel/portal-ui:^0.2`.
 
 ## Publicação
+
+O instalador publica configuração e assets automaticamente:
+
+```bash
+php artisan portal-ui:install
+```
+
+Para também gerar uma primeira tela funcional:
+
+```bash
+php artisan portal-ui:install --starter
+```
+
+Os comandos de publicação equivalentes são:
 
 ```bash
 php artisan vendor:publish --tag=portal-ui-config
@@ -60,9 +97,26 @@ Regra prática:
 
 Evite publicar `views` sem necessidade. Quando elas existem em `resources/views/vendor/portal-ui`, o Laravel usa a cópia local e deixa de acompanhar automaticamente as views do pacote.
 
+O instalador não sobrescreve configuração, layout, view ou rota do starter já existentes. A opção `--force` permite a sobrescrita explícita dos arquivos gerenciados e da configuração; use-a somente depois de revisar customizações locais. A inclusão criada em `routes/web.php` é marcada e nunca é duplicada.
+
+### Atualização para 0.2
+
+Depois de atualizar o pacote, republique os assets e limpe os caches:
+
+```bash
+composer require sistemas-eel/portal-ui:^0.2 -W
+php artisan vendor:publish --tag=portal-ui-assets --force
+php artisan optimize:clear
+php artisan portal-ui:doctor
+```
+
+O `--force` é necessário porque o Composer atualiza `vendor`, mas não substitui automaticamente arquivos que já estão em `public/vendor/portal-ui`. Se o sistema publicou views da SenhaÚnica, compare suas customizações antes de republicá-las; essas cópias locais têm prioridade sobre as correções do pacote.
+
 ## Uso Rápido
 
-Layout autenticado:
+Para uma instalação nova, prefira o [tutorial completo da primeira tela](docs/getting-started.md). Os exemplos abaixo servem como referência rápida para projetos que já possuem rotas e layouts organizados.
+
+Layout de área interna, normalmente usado depois da autenticação:
 
 ```blade
 @extends('portal-ui::layouts.app')
@@ -76,14 +130,35 @@ Layout autenticado:
     />
 
     <x-portal::card>
-        <x-slot:header>
+        <x-slot name="header">
             Indicadores
-        </x-slot:header>
+        </x-slot>
 
         Conteúdo principal da página.
     </x-portal::card>
 @endsection
 ```
+
+Se o sistema já padroniza suas páginas com `@extends('layouts.app')`, crie um layout intermediário mínimo:
+
+```blade
+{{-- resources/views/layouts/app.blade.php --}}
+@extends('portal-ui::layouts.app')
+```
+
+As páginas da aplicação continuam simples:
+
+```blade
+@extends('layouts.app')
+
+@section('title', 'Teste autenticado')
+
+@section('content')
+    <x-portal::card>Usuário autenticado: {{ auth()->user()->name }}</x-portal::card>
+@endsection
+```
+
+Não copie o conteúdo interno de `portal-ui::layouts.app` para esse arquivo. O layout do pacote já monta o `<head>`, topbar, sidebar, stacks e referências ao CSS/JS; manter apenas a extensão evita que o consumidor fique preso a uma versão antiga.
 
 Layout visitante:
 
@@ -130,7 +205,9 @@ Principais seções:
 
 ## Integração SenhaUnica
 
-Quando `portal-ui.integrations.senhaunica.enabled` está ativo, o pacote registra views tematizadas no namespace `senhaunica`.
+O Portal UI detecta `uspdev/senhaunica-socialite` automaticamente. Quando o service provider da dependência está disponível e `portal-ui.integrations.senhaunica.enabled` está ativo, o pacote registra views tematizadas no namespace `senhaunica`.
+
+Sem a biblioteca instalada, a integração permanece inativa e não registra um namespace incompleto. Ainda é seguro executar `vendor:publish --tag=portal-ui-senhaunica-views`: a publicação apenas copia arquivos e não os renderiza.
 
 A ordem de resolução fica:
 
@@ -145,6 +222,29 @@ Para desabilitar:
 ```env
 PORTAL_UI_SENHAUNICA_VIEWS=false
 ```
+
+Para forçar a ativação, use `PORTAL_UI_SENHAUNICA_VIEWS=true`, mas a dependência ainda precisa estar instalada. Se ela estiver ausente, `portal-ui:doctor` apresentará um aviso e as views não serão registradas.
+
+Por padrão, as páginas da integração estendem diretamente `portal-ui::layouts.app`. Para fazê-las passar pelo layout intermediário do sistema:
+
+```env
+PORTAL_UI_SENHAUNICA_LAYOUT=layouts.app
+```
+
+O layout escolhido precisa expor a seção `content`. A configuração antiga `senhaunica.template` não controla as views fornecidas pelo Portal UI 0.2.
+
+### Autorização e erro 403
+
+O Portal UI apenas substitui a apresentação das telas; ele não concede acesso administrativo. O `uspdev/senhaunica-socialite` chama `$this->authorize('admin')` em `/senhaunica-users` e `/loginas`, portanto o usuário autenticado precisa ser reconhecido pelo gate `admin` no app consumidor.
+
+Se a autenticação vem de outro cliente SSO, valide especialmente:
+
+- se o model autenticado possui as permissões/roles esperadas;
+- se o `guard_name` usado pelo Spatie Permission coincide com o guard da sessão;
+- se a lista `SENHAUNICA_ADMINS` foi convertida em permissão no fluxo de login;
+- se `Gate::allows('admin')` retorna `true` para o usuário que deveria administrar.
+
+Quando for necessário adaptar uma fonte externa de administradores ao gate exigido pela SenhaÚnica, essa ponte deve ficar no `AppServiceProvider` (ou em um provider de autorização) da aplicação. Ela não deve ficar no Portal UI: uma biblioteca visual não conhece a política de segurança nem pode tornar usuários administradores por conta própria.
 
 ## Navegação
 
@@ -208,6 +308,7 @@ Componentes disponíveis com prefixo `x-portal::`:
 - `confirm-modal`
 - `empty-state`
 - `flash-messages`
+- `icon`
 - `input`
 - `modal`
 - `page-header`
@@ -233,6 +334,9 @@ Exemplo:
     Salvar
 </x-portal::button>
 
+<x-portal::icon name="fa-user" />
+<x-portal::icon name="fa-brands fa-github" label="GitHub" />
+
 <x-portal::confirm-modal
     wire:model="showConfirmModal"
     title="Confirmar exclusao"
@@ -251,17 +355,17 @@ Exemplo:
 />
 
 <x-portal::table>
-    <x-slot:head>
+    <x-slot name="head">
         <tr>
             <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Nome</th>
         </tr>
-    </x-slot:head>
+    </x-slot>
 
-    <x-slot:body>
+    <x-slot name="body">
         <tr>
             <td class="px-4 py-3 text-sm text-gray-600">Exemplo</td>
         </tr>
-    </x-slot:body>
+    </x-slot>
 </x-portal::table>
 
 <x-portal::section-footer align="center">
@@ -289,12 +393,21 @@ O pacote distribui:
 
 - `public/portal-ui.css`
 - `public/portal-ui.js`
+- fontes locais do Font Awesome (`public/fa-*.woff2`)
 
 O app consumidor deve publicar esses assets para `public/vendor/portal-ui`:
 
 ```bash
 php artisan vendor:publish --tag=portal-ui-assets
 ```
+
+O CSS da versão 0.2 já inclui o Font Awesome e referencia as fontes publicadas no mesmo diretório. Assim, os ícones funcionam sem CDN. O carregamento externo permanece disponível apenas como fallback explícito:
+
+```env
+PORTAL_UI_FONTAWESOME_CDN=true
+```
+
+Se os ícones não aparecerem depois de uma atualização, execute a publicação com `--force` e rode `php artisan portal-ui:doctor`. O diagnóstico também detecta arquivos de fonte ausentes, layout SenhaÚnica inexistente e CSS/JS defasados.
 
 Ao alterar CSS ou JavaScript do pacote, gere novamente os arquivos distribuíveis:
 
@@ -415,7 +528,7 @@ class ExemploModal extends Component
 >
     Conteúdo do formulário aqui.
 
-    <x-slot:footer>
+    <x-slot name="footer">
         <x-portal::button
             variant="secondary"
             click="$set('showFormModal', false)"
@@ -426,7 +539,7 @@ class ExemploModal extends Component
         <x-portal::button click="save" icon="fa-save">
             Salvar
         </x-portal::button>
-    </x-slot:footer>
+    </x-slot>
 </x-portal::modal>
 ```
 

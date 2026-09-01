@@ -54,11 +54,11 @@
         @if($onclick) onclick="{{ $onclick }}" @endif
     >
         @if($icon && $iconPosition === 'left')
-            <i class="fa {{ $icon }}" aria-hidden="true"></i>
+            <x-portal::icon :name="$icon" />
         @endif
         {{ $slot }}
         @if($icon && $iconPosition === 'right')
-            <i class="fa {{ $icon }}" aria-hidden="true"></i>
+            <x-portal::icon :name="$icon" />
         @endif
     </a>
 @else
@@ -72,11 +72,11 @@
         @if($onclick) onclick="{{ $onclick }}" @endif
     >
         @if($icon && $iconPosition === 'left')
-            <i class="fa {{ $icon }}" aria-hidden="true"></i>
+            <x-portal::icon :name="$icon" />
         @endif
         {{ $slot }}
         @if($icon && $iconPosition === 'right')
-            <i class="fa {{ $icon }}" aria-hidden="true"></i>
+            <x-portal::icon :name="$icon" />
         @endif
     </button>
 @endif
