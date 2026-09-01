@@ -27,10 +27,10 @@
                 ['label' => 'Showcase Minimal', 'route' => ''],
             ]"
         >
-            <x-slot:actions>
+            <x-slot name="actions">
                 <x-portal::badge variant="secondary">Minimal</x-portal::badge>
                 <x-portal::button size="sm" icon="fa-plus">Nova ação</x-portal::button>
-            </x-slot:actions>
+            </x-slot>
         </x-portal::page-header>
 
         @if(collect($demoLinks)->contains(fn ($link) => \Illuminate\Support\Facades\Route::has($link['route'])))
@@ -62,12 +62,12 @@
         </x-portal::alert>
 
         <x-portal::card>
-            <x-slot:header>
+            <x-slot name="header">
                 <div class="flex items-center justify-between gap-3">
                     <span class="font-semibold text-gray-900 dark:text-gray-100">Resumo</span>
                     <x-portal::badge variant="success">Ativo</x-portal::badge>
                 </div>
-            </x-slot:header>
+            </x-slot>
 
             <p class="text-sm text-gray-600 dark:text-gray-300">
                 O showcase minimal reúne só o essencial: breadcrumbs, título, ação principal, alerta e card.

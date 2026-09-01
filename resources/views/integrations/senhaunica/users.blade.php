@@ -1,12 +1,9 @@
-@extends(config('senhaunica.template'))
+@extends(config('portal-ui.integrations.senhaunica.layout', 'portal-ui::layouts.app'))
 
 @section('title', 'Usuários SenhaUnica')
 
 @push('styles')
 <style>
-    /* Alpine.js cloak para evitar piscada de conteúdo antes de carregar o JS */
-    [x-cloak] { display: none !important; }
-
     /* Força o ponteiro do mouse em botões clicáveis */
     button, [role="button"], .cursor-pointer {
         cursor: pointer !important;

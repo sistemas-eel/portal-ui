@@ -1,4 +1,6 @@
-@extends('layouts.portal-app')
+@extends(config('portal-ui.integrations.senhaunica.layout', 'portal-ui::layouts.app'))
+
+@section('title', 'Acesso indisponível')
 
 @section('content')
     <h1 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Senhaunica-socialite</h1>

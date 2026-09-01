@@ -1,4 +1,4 @@
-@extends(config('senhaunica.template'))
+@extends(config('portal-ui.integrations.senhaunica.layout', 'portal-ui::layouts.app'))
 
 @section('title', 'Login Local')
 

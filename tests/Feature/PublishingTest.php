@@ -69,14 +69,36 @@ class PublishingTest extends TestCase
 
         $this->assertFileExists($this->publishedAssets.'/portal-ui.css');
         $this->assertFileExists($this->publishedAssets.'/portal-ui.js');
+        $this->assertFileExists($this->publishedAssets.'/fa-solid-900.woff2');
+        $this->assertFileExists($this->publishedAssets.'/fa-regular-400.woff2');
+        $this->assertFileExists($this->publishedAssets.'/fa-brands-400.woff2');
+        $this->assertFileExists($this->publishedAssets.'/fa-v4compatibility.woff2');
         $this->assertStringContainsString('--color-portal', $css);
+        $this->assertStringContainsString('Font Awesome 7 Free', $css);
+        $this->assertStringContainsString('url(./fa-solid-900.woff2)', $css);
+        $this->assertStringNotContainsString('url(/fa-solid-900.woff2)', $css);
         $this->assertStringContainsString('data-portal-sidebar', $js);
+        $this->assertStringContainsString('data-portal-modal-open', $js);
+        $this->assertStringContainsString('data-portal-person-select', $js);
         $this->assertStringContainsString('portalAutoDismissSignature', $js);
         $this->assertStringContainsString('livewire:init', $js);
         $this->assertStringContainsString('morphed', $js);
-        $this->assertStringNotContainsString('chat', strtolower($css.$js));
-        $this->assertStringNotContainsString('agente', strtolower($css.$js));
+        $this->assertStringNotContainsString('data-portal-chat', strtolower($css.$js));
+        $this->assertStringNotContainsString('data-portal-agente', strtolower($css.$js));
         $this->assertStringNotContainsString('wire:model', strtolower($css.$js));
+    }
+
+    public function test_assets_tambem_podem_ser_publicados_pela_tag_padrao_do_laravel(): void
+    {
+        $this->artisan('vendor:publish', [
+            '--provider' => PortalUiServiceProvider::class,
+            '--tag' => 'laravel-assets',
+            '--force' => true,
+        ])->assertExitCode(0);
+
+        $this->assertFileExists($this->publishedAssets.'/portal-ui.css');
+        $this->assertFileExists($this->publishedAssets.'/portal-ui.js');
+        $this->assertFileExists($this->publishedAssets.'/fa-solid-900.woff2');
     }
 
     public function test_stubs_podem_ser_publicados_com_modelos_de_navegacao_e_rotas_demo(): void
@@ -92,6 +114,9 @@ class PublishingTest extends TestCase
         $this->assertFileExists($this->publishedStubs.'/navigation/simple.php');
         $this->assertFileExists($this->publishedStubs.'/navigation/admin.php');
         $this->assertFileExists($this->publishedStubs.'/routes/demo.php');
+        $this->assertFileExists($this->publishedStubs.'/starter/layouts/app.blade.php');
+        $this->assertFileExists($this->publishedStubs.'/starter/portal-ui-starter.blade.php');
+        $this->assertFileExists($this->publishedStubs.'/starter/routes/portal-ui-starter.php');
 
         $this->assertStringContainsString("'groups' =>", File::get($this->publishedStubs.'/navigation/admin.php'));
         $this->assertStringContainsString("Route::view('/portal-ui-demo'", File::get($this->publishedStubs.'/routes/demo.php'));

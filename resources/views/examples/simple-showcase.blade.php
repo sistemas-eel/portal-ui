@@ -26,11 +26,11 @@
             ['label' => 'Showcase Simple', 'route' => ''],
         ]"
     >
-        <x-slot:actions>
+        <x-slot name="actions">
             <x-portal::badge variant="primary">Simple</x-portal::badge>
             <x-portal::button variant="outline" icon="fa-rotate-right">Atualizar</x-portal::button>
             <x-portal::button icon="fa-plus">Novo registro</x-portal::button>
-        </x-slot:actions>
+        </x-slot>
     </x-portal::page-header>
 
     <div class="space-y-6">
@@ -64,36 +64,36 @@
 
         <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <div class="flex items-center justify-between gap-3">
                         <span class="font-semibold text-gray-900 dark:text-gray-100">Solicitações abertas</span>
                         <x-portal::badge variant="warning">24</x-portal::badge>
                     </div>
-                </x-slot:header>
+                </x-slot>
 
                 <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">128</p>
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Chamados aguardando tratamento.</p>
             </x-portal::card>
 
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <div class="flex items-center justify-between gap-3">
                         <span class="font-semibold text-gray-900 dark:text-gray-100">Tempo médio</span>
                         <x-portal::badge variant="success">Dentro do SLA</x-portal::badge>
                     </div>
-                </x-slot:header>
+                </x-slot>
 
                 <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">2h 14m</p>
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Média das últimas 48 horas.</p>
             </x-portal::card>
 
             <x-portal::card>
-                <x-slot:header>
+                <x-slot name="header">
                     <div class="flex items-center justify-between gap-3">
                         <span class="font-semibold text-gray-900 dark:text-gray-100">Satisfação</span>
                         <x-portal::badge variant="primary">NPS</x-portal::badge>
                     </div>
-                </x-slot:header>
+                </x-slot>
 
                 <p class="text-3xl font-bold text-gray-900 dark:text-gray-100">87%</p>
                 <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Avaliação positiva dos usuários.</p>
@@ -106,22 +106,22 @@
                 subtitle="Estrutura sugerida para listagens administrativas."
                 icon="fa-table"
             >
-                <x-slot:actions>
+                <x-slot name="actions">
                     <x-portal::button size="sm" variant="ghost" icon="fa-filter">Filtros</x-portal::button>
-                </x-slot:actions>
+                </x-slot>
             </x-portal::section-header>
 
             <x-portal::table>
-                <x-slot:head>
+                <x-slot name="head">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Nome</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Área</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Status</th>
                         <th class="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Ações</th>
                     </tr>
-                </x-slot:head>
+                </x-slot>
 
-                <x-slot:body>
+                <x-slot name="body">
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/40">
                             <td class="px-4 py-3 text-sm text-gray-800 dark:text-gray-200">Portal de Atendimento</td>
                             <td class="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">Suporte</td>
@@ -147,7 +147,7 @@
                                 />
                             </td>
                         </tr>
-                </x-slot:body>
+                </x-slot>
             </x-portal::table>
 
             <x-portal::section-footer muted="true">

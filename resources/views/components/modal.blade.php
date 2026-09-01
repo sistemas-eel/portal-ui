@@ -14,6 +14,7 @@
     $wireModel = $wireModelAttribute ? $attributeBag[$wireModelAttribute] : null;
     $isWireModal = ! empty($wireModel);
     $shouldRender = $isWireModal || $show;
+    $isInitiallyHidden = $isWireModal || preg_match('/(?:^|\s)is-hidden(?:\s|$)/', (string) $attributes->get('class', '')) === 1;
     $widths = [
         'sm' => 'max-w-sm',
         'md' => 'max-w-md',
@@ -38,11 +39,13 @@
         @if($isWireModal) data-portal-modal-wire @endif
         role="dialog"
         aria-modal="true"
+        aria-hidden="{{ $isInitiallyHidden ? 'true' : 'false' }}"
         @if($title) aria-label="{{ $title }}" @endif
         @if($isWireModal)
             wire:ignore.self
             x-data="{ show: $wire.entangle('{{ $wireModel }}') }"
             x-show="show"
+            x-bind:aria-hidden="show ? 'false' : 'true'"
             x-cloak
             x-init="
                 $watch('show', value => {
@@ -82,7 +85,7 @@
                 <div class="{{ $headerClass }} px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
                     <h2 class="text-lg font-semibold flex items-center gap-2">
                         @if($icon)
-                            <i class="fa {{ $icon }}" aria-hidden="true"></i>
+                            <x-portal::icon :name="$icon" />
                         @endif
                         {{ $title }}
                     </h2>
@@ -100,7 +103,7 @@
                                 data-portal-modal-close
                             @endif
                         >
-                            <i class="fa fa-times" aria-hidden="true"></i>
+                            <x-portal::icon name="fa-times" />
                         </button>
                     @endisset
                 </div>

@@ -5,7 +5,7 @@
     $hasBreadcrumbs = isset($breadcrumbs) || $__env->hasSection('breadcrumbs');
     $hasSidebar = $hasSidebar ?? true;
 @endphp
-<header x-data class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+<header class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center gap-4 min-w-0">
