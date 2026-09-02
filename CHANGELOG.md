@@ -4,6 +4,12 @@ Todas as alterações relevantes deste pacote serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [0.2.1] - 2026-09-02
+
+### Corrigido
+
+- Resultados do seletor de pessoas da SenhaÚnica que eram recortados pelo painel do modal.
+
 ## [0.2.0] - 2026-09-01
 
 ### Adicionado

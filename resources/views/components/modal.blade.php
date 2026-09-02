@@ -80,9 +80,10 @@
             @endif
         >
             <div
-                class="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl {{ $maxWidthClass }} w-full mt-20 sm:my-10 relative overflow-hidden"
+                data-portal-modal-panel
+                class="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl {{ $maxWidthClass }} w-full mt-20 sm:my-10 relative overflow-visible"
             >
-                <div class="{{ $headerClass }} px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+                <div class="{{ $headerClass }} rounded-t-3xl sm:rounded-t-2xl px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-10 shadow-sm">
                     <h2 class="text-lg font-semibold flex items-center gap-2">
                         @if($icon)
                             <x-portal::icon :name="$icon" />
@@ -113,7 +114,7 @@
                 </div>
 
                 @isset($footer)
-                    <div class="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-end gap-2">
+                    <div class="rounded-b-3xl sm:rounded-b-2xl px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-end gap-2">
                         {{ $footer }}
                     </div>
                 @endisset

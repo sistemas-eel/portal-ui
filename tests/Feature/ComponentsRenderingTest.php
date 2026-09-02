@@ -144,6 +144,11 @@ class ComponentsRenderingTest extends TestCase
         $this->assertStringContainsString('Detalhes do item', $html);
         $this->assertStringContainsString('Conteúdo do modal sem Livewire.', $html);
         $this->assertStringContainsString('data-portal-modal-close', $html);
+        $this->assertMatchesRegularExpression(
+            '/data-portal-modal-panel\s+class="[^"]*overflow-visible[^"]*"/',
+            $html,
+            'O painel do modal não pode recortar dropdowns e resultados posicionados dentro dele'
+        );
         $this->assertStringContainsString('Fechar', $html);
         $this->assertStringContainsString('max-w-lg', $html);
         $this->assertStringNotContainsString('wire:', $html);
