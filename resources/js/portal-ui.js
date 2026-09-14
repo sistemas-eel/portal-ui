@@ -389,9 +389,68 @@ import '../css/portal-ui.css';
     function dismissElement(element) {
         if (!element || !element.parentNode) return;
 
+        if (element.__portalAutoDismissTimer) {
+            clearTimeout(element.__portalAutoDismissTimer);
+            element.__portalAutoDismissTimer = null;
+        }
+
         var container = closest(element, '[data-portal-flash-messages]');
         element.remove();
         cleanupFlashContainer(container);
+    }
+
+    function pauseAutoDismiss(el) {
+        if (!el.__portalAutoDismissTimer) return;
+
+        var elapsed = Date.now() - el.__portalAutoDismissStartedAt;
+        el.__portalAutoDismissRemaining = Math.max(
+            0,
+            el.__portalAutoDismissRemaining - elapsed
+        );
+
+        clearTimeout(el.__portalAutoDismissTimer);
+        el.__portalAutoDismissTimer = null;
+
+        var progressBar = el.querySelector('.portal-alert-progress');
+
+        if (progressBar) {
+            var currentWidth = window.getComputedStyle(progressBar).width;
+            progressBar.style.transitionDuration = '0ms';
+            progressBar.style.width = currentWidth;
+            void progressBar.offsetWidth;
+        }
+    }
+
+    function resumeAutoDismiss(el) {
+        if (
+            el.__portalAutoDismissTimer
+            || el.__portalAutoDismissRemaining <= 0
+        ) return;
+
+        var remaining = el.__portalAutoDismissRemaining;
+        var progressBar = el.querySelector('.portal-alert-progress');
+
+        el.__portalAutoDismissStartedAt = Date.now();
+        el.__portalAutoDismissTimer = setTimeout(function () {
+            el.__portalAutoDismissRemaining = 0;
+
+            if (document.body.contains(el)) {
+                dismissElement(el);
+            }
+        }, remaining);
+
+        if (progressBar) {
+            progressBar.style.transitionProperty = 'width';
+            progressBar.style.transitionTimingFunction = 'linear';
+            void progressBar.offsetWidth;
+
+            requestAnimationFrame(function () {
+                if (!el.__portalAutoDismissTimer) return;
+
+                progressBar.style.transitionDuration = remaining + 'ms';
+                progressBar.style.width = '0%';
+            });
+        }
     }
 
     function initializeAutoDismiss(el) {
@@ -404,7 +463,20 @@ import '../css/portal-ui.css';
             clearTimeout(el.__portalAutoDismissTimer);
         }
 
+        if (el.__portalAutoDismissPauseHandler) {
+            el.removeEventListener(
+                'mouseenter',
+                el.__portalAutoDismissPauseHandler
+            );
+            el.removeEventListener(
+                'mouseleave',
+                el.__portalAutoDismissResumeHandler
+            );
+        }
+
         el.__portalAutoDismissSignature = signature;
+        el.__portalAutoDismissRemaining = delay;
+
         var progressBar = el.querySelector('.portal-alert-progress');
 
         if (progressBar) {
@@ -413,18 +485,25 @@ import '../css/portal-ui.css';
             progressBar.style.transitionDuration = '0ms';
             progressBar.style.width = '100%';
             void progressBar.offsetWidth;
-            requestAnimationFrame(function () {
-                progressBar.style.transitionDuration = delay + 'ms';
-                progressBar.style.width = '0%';
-            });
         }
 
-        el.__portalAutoDismissTimer = setTimeout(function () {
-            if (document.body.contains(el)) {
-                dismissElement(el);
-            }
-            el.__portalAutoDismissTimer = null;
-        }, delay);
+        el.__portalAutoDismissPauseHandler = function () {
+            pauseAutoDismiss(el);
+        };
+        el.__portalAutoDismissResumeHandler = function () {
+            resumeAutoDismiss(el);
+        };
+
+        el.addEventListener(
+            'mouseenter',
+            el.__portalAutoDismissPauseHandler
+        );
+        el.addEventListener(
+            'mouseleave',
+            el.__portalAutoDismissResumeHandler
+        );
+
+        resumeAutoDismiss(el);
     }
 
     function initializeAutoDismissInRoot(root) {

@@ -10,6 +10,10 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 - Suporte a parâmetros de rotas nos itens de breadcrumb do componente `x-portal::page-header`.
 
+### Corrigido
+
+- O auto-dismiss dos alertas agora pausa o temporizador e a barra de progresso enquanto o ponteiro permanece sobre a mensagem.
+
 ## [0.2.1] - 2026-09-02
 
 ### Corrigido

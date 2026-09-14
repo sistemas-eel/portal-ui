@@ -766,6 +766,19 @@ Use dentro de cards e blocos internos:
 </x-portal::alert>
 ```
 
+### Flash alert
+
+```blade
+<x-portal::flash-alert
+    variant="success"
+    title="Sucesso"
+    :auto-dismiss="true"
+    :dismiss-delay="8000"
+>
+    Operação concluída.
+</x-portal::flash-alert>
+```
+
 ### Badge
 
 ```blade

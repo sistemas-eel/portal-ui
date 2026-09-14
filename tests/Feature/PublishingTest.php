@@ -81,6 +81,12 @@ class PublishingTest extends TestCase
         $this->assertStringContainsString('data-portal-modal-open', $js);
         $this->assertStringContainsString('data-portal-person-select', $js);
         $this->assertStringContainsString('portalAutoDismissSignature', $js);
+        $this->assertStringContainsString(
+            'portalAutoDismissRemaining',
+            $js,
+        );
+        $this->assertStringContainsString('mouseenter', $js);
+        $this->assertStringContainsString('mouseleave', $js);
         $this->assertStringContainsString('livewire:init', $js);
         $this->assertStringContainsString('morphed', $js);
         $this->assertStringNotContainsString('data-portal-chat', strtolower($css.$js));
