@@ -6,6 +6,8 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 
 ## [Não lançado]
 
+## [0.3.0] - 2026-09-14
+
 ### Adicionado
 
 - Suporte a parâmetros de rotas nos itens de breadcrumb do componente `x-portal::page-header`.

@@ -12,7 +12,7 @@ use SistemasEel\PortalUi\View\Components\GuestLayout;
 
 class PortalUiServiceProvider extends ServiceProvider
 {
-    public const VERSION = '0.2.1';
+    public const VERSION = '0.3.0';
 
     /**
      * Componentes anônimos expostos pelo pacote.

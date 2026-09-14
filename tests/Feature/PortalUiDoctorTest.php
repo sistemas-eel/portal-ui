@@ -30,7 +30,7 @@ class PortalUiDoctorTest extends TestCase
         $this->publishAssets();
 
         $this->artisan('portal-ui:doctor')
-            ->expectsOutput('Portal UI 0.2.1')
+            ->expectsOutput('Portal UI 0.3.0')
             ->expectsOutput('[OK] Asset sincronizado: fa-solid-900.woff2')
             ->expectsOutput('[OK] Layout SenhaÚnica: portal-ui::layouts.app')
             ->expectsOutput('[OK] Integração SenhaÚnica inativa; dependência opcional não instalada.')

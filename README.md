@@ -2,7 +2,7 @@
 
 Biblioteca de UI Laravel reutilizável para sistemas administrativos. O pacote é `Blade-first`: entrega layouts, componentes, configuração e assets compilados sem exigir Livewire, Alpine, Tailwind ou Vite no app consumidor.
 
-Versão atual: `v0.2.1`.
+Versão atual: `v0.3.0`.
 
 ## Comece aqui
 
