@@ -26,6 +26,14 @@ abstract class TestCase extends OrchestraTestCase
         $app['router']->get('/login', function () {})->name('login');
         $app['router']->get('/logout', function () {})->name('logout');
         $app['router']->get('/dashboard', function () {})->name('dashboard');
+
+        $app['router']
+            ->get('/tipos/{tipo}', function () {})
+            ->name('tipos.show');
+
+        $app['router']
+            ->get('/tipos/{tipo}/versoes/{versao}', function () {})
+            ->name('tipos.versoes.show');
     }
 
     protected function setUp(): void

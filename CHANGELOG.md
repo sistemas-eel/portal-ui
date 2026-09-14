@@ -4,6 +4,12 @@ Todas as alterações relevantes deste pacote serão registradas neste arquivo.
 
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o versionamento segue [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [Não lançado]
+
+### Adicionado
+
+- Suporte a parâmetros de rotas nos itens de breadcrumb do componente `x-portal::page-header`.
+
 ## [0.2.1] - 2026-09-02
 
 ### Corrigido

@@ -209,4 +209,21 @@ class ComponentsRenderingTest extends TestCase
         $this->assertStringContainsString('Revise as informações.', $html);
         $this->assertStringContainsString('border-yellow-200', $html);
     }
+
+    public function test_page_header_renderiza_breadcrumbs_com_parametros_de_rota(): void
+    {
+        $html = view('theme-tests::page-header-breadcrumbs')->render();
+
+        $this->assertStringContainsString(
+            'href="http://localhost/tipos/42"',
+            $html,
+        );
+        $this->assertStringContainsString(
+            'href="http://localhost/tipos/42/versoes/3"',
+            $html,
+        );
+        $this->assertStringContainsString('Tipo de chamado', $html);
+        $this->assertStringContainsString('Versão 3', $html);
+        $this->assertStringContainsString('Configuração', $html);
+    }
 }

@@ -647,18 +647,36 @@ Use para cabeçalho principal da página, com breadcrumbs e ações:
 
 ```blade
 <x-portal::page-header
-    title="Usuários"
-    subtitle="Gerencie os usuários do sistema"
+    title="Editar usuário"
+    subtitle="Atualize os dados do usuário"
     :breadcrumbs="[
-        ['label' => 'Dashboard', 'route' => 'dashboard'],
-        ['label' => 'Usuários', 'route' => ''],
+        [
+            'label' => 'Dashboard',
+            'route' => 'dashboard',
+        ],
+        [
+            'label' => 'Usuários',
+            'route' => 'usuarios.index',
+        ],
+        [
+            'label' => 'Maria',
+            'route' => 'usuarios.show',
+            'parameters' => [
+                'usuario' => 42,
+            ],
+        ],
+        ['label' => 'Editar'],
     ]"
 >
     <x-slot name="actions">
-        <x-portal::button icon="fa-plus">Novo usuário</x-portal::button>
+        <x-portal::button icon="fa-save">Salvar</x-portal::button>
     </x-slot>
 </x-portal::page-header>
 ```
+
+Cada item aceita `label`, uma `route` opcional e `parameters` opcional.
+Use `parameters` para informar os parâmetros exigidos pela rota nomeada.
+Quando `route` não é informada, o item é renderizado como texto.
 
 ### `x-portal::section-header`
 

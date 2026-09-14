@@ -16,7 +16,13 @@
                             <span class="text-gray-400">/</span>
                         @endif
                         @if(!empty($breadcrumb['route']))
-                            <a href="{{ route($breadcrumb['route']) }}" class="hover:text-gray-700 hover:underline">
+                            <a
+                                href="{{ route(
+                                    $breadcrumb['route'],
+                                    $breadcrumb['parameters'] ?? [],
+                                ) }}"
+                                class="hover:text-gray-700 hover:underline"
+                            >
                                 {{ $breadcrumb['label'] }}
                             </a>
                         @else
