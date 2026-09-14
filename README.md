@@ -160,6 +160,16 @@ As páginas da aplicação continuam simples:
 
 Não copie o conteúdo interno de `portal-ui::layouts.app` para esse arquivo. O layout do pacote já monta o `<head>`, topbar, sidebar, stacks e referências ao CSS/JS; manter apenas a extensão evita que o consumidor fique preso a uma versão antiga.
 
+Se a aplicação utiliza classes Tailwind próprias, carregue também o CSS compilado pelo Vite:
+
+```blade
+@extends('portal-ui::layouts.app')
+
+@push('styles')
+    @vite('resources/css/app.css')
+@endpush
+```
+
 Layout visitante:
 
 ```blade
@@ -570,7 +580,7 @@ if (file_exists(base_path('stubs/portal-ui/routes/demo.php'))) {
 }
 ```
 
-Isso registrará as rotas automaticamente (como `/portal-ui-demo`). 
+Isso registrará as rotas automaticamente (como `/portal-ui-demo`).
 
 Para configurar a barra lateral (sidebar) com um dos modelos de menu incluídos em `stubs/portal-ui/navigation/`:
 1. Escolha um dos arquivos (ex: `simple.php` ou `admin.php`).

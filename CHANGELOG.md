@@ -9,6 +9,7 @@ O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o 
 ### Adicionado
 
 - Suporte a parâmetros de rotas nos itens de breadcrumb do componente `x-portal::page-header`.
+- Documentação da integração com o CSS compilado por Vite para aplicações que utilizam classes Tailwind próprias.
 
 ### Corrigido
 

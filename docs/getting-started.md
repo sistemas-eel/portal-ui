@@ -117,6 +117,30 @@ resources/views/home.blade.php
 
 Não copie o HTML de `portal-ui::layouts.app`. A extensão de uma linha é suficiente.
 
+### Aplicações que usam Vite e Tailwind
+
+O CSS publicado pelo Portal UI contém somente as classes utilizadas nas views do próprio pacote. Se a aplicação consumidora usar classes Tailwind diretamente em suas páginas, ela também deverá carregar seu CSS compilado.
+
+Nesse caso, use o stack `styles` no layout intermediário:
+
+```blade
+@extends('portal-ui::layouts.app')
+
+@push('styles')
+    @vite('resources/css/app.css')
+@endpush
+```
+
+O CSS publicado do Portal UI continuará fornecendo os estilos dos componentes, enquanto `resources/css/app.css` fornecerá as classes encontradas nas views da aplicação.
+
+Depois de adicionar ou alterar classes Tailwind, gere novamente os assets da aplicação:
+
+```bash
+npm run build
+```
+
+Executar o build sem carregar `resources/css/app.css` no layout não é suficiente, pois o navegador não receberá o arquivo compilado.
+
 ## 5. Criar a página inicial
 
 Crie `resources/views/home.blade.php`:

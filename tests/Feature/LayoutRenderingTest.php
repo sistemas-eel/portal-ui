@@ -192,6 +192,28 @@ class LayoutRenderingTest extends TestCase
         $this->assertStringContainsString('Sair', $html);
     }
 
+    public function test_layout_carrega_estilos_do_consumidor_apos_o_css_do_pacote(): void
+    {
+        $html = view('theme-tests::layout-app-with-styles')->render();
+
+        $portalStylesPosition = strpos(
+            $html,
+            '/vendor/portal-ui/portal-ui.css',
+        );
+        $consumerStylesPosition = strpos(
+            $html,
+            'data-consumer-styles',
+        );
+
+        $this->assertNotFalse($portalStylesPosition);
+        $this->assertNotFalse($consumerStylesPosition);
+        $this->assertLessThan(
+            $consumerStylesPosition,
+            $portalStylesPosition,
+            'O CSS do consumidor deve ser carregado depois do CSS do Portal UI.',
+        );
+    }
+
     private function fakeUser(): Authenticatable
     {
         return new class implements Authenticatable

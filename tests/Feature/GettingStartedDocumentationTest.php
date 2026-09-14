@@ -61,6 +61,10 @@ class GettingStartedDocumentationTest extends TestCase
 
         $this->assertStringContainsString("@extends('portal-ui::layouts.app')", $guide);
         $this->assertStringContainsString("@extends('layouts.app')", $guide);
+        $this->assertStringContainsString(
+            "@vite('resources/css/app.css')",
+            $guide,
+        );
         $this->assertStringContainsString("Route::view('/', 'home')->name('home');", $guide);
         $this->assertStringContainsString("'route' => 'home'", $guide);
         $this->assertStringContainsString('php artisan portal-ui:doctor', $guide);

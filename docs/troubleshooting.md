@@ -24,6 +24,7 @@ O diagnóstico verifica versão, layout configurado, CSS, JavaScript e fontes pu
 | `/senhaunica-users` ou `/loginas` retorna 403 | O usuário não passa pelo gate `admin` | Verifique permissões, roles, guards e a regra de integração descrita no guia SenhaÚnica. |
 | Uma correção do pacote não aparece | Existe override local antigo | Confira `resources/views/vendor/portal-ui` e `resources/views/vendor/senhaunica`. Compare ou remova apenas os overrides que não são mais necessários. |
 | `Target class [...CheckSSOSession] does not exist` | Middleware aponta para uma classe ausente ou para uma versão diferente do cliente SSO | Corrija o alias/FQCN conforme a versão instalada e execute `composer dump-autoload` e `php artisan optimize:clear`. Esse erro não é causado pelo layout. |
+| Uma classe Tailwind usada pela aplicação não produz efeito | O CSS publicado contém apenas as classes utilizadas pelo Portal UI, ou o CSS compilado da aplicação não está carregado | No layout intermediário, adicione `@vite('resources/css/app.css')` ao stack `styles` e execute `npm run build`. |
 
 ## Verificações manuais
 
